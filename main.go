@@ -43,7 +43,14 @@ func main() {
 	go cfg.crawlPage(rawBaseURL)
 	cfg.wg.Wait()
 
-	for normalizedURL, count := range cfg.pages {
-		fmt.Printf("%d - %s\n", count, normalizedURL)
+	printReport(cfg.pages, rawBaseURL)
+}
+
+func printReport(pages map[string]int, baseURL string) {
+	fmt.Println("=============================")
+	fmt.Printf("REPORT for %s\n", baseURL)
+	fmt.Println("=============================")
+	for page, times := range pages {
+		fmt.Printf("Found %d internal links to %s\n", times, page)
 	}
 }
